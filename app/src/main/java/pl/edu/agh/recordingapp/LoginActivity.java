@@ -50,9 +50,6 @@ public class LoginActivity extends AppCompatActivity {
 
         setContentView(R.layout.activity_login);
 
-        Intent intent2 = new Intent(this, MainActivity.class); //todo
-        startActivity(intent2);
-
         Button createAccountButton = findViewById(R.id.create_account_button);
         createAccountButton.setOnClickListener(view -> {
             Intent intent = new Intent(this, CreateAccountActivity.class);
@@ -111,7 +108,7 @@ public class LoginActivity extends AppCompatActivity {
             focusView.requestFocus();
         } else {
             showProgress(true);
-            mAuthTask = new UserLoginTask(login, password);
+            mAuthTask = new UserLoginTask(login, password, this);
             mAuthTask.execute((Void) null);
         }
     }
@@ -144,12 +141,14 @@ public class LoginActivity extends AppCompatActivity {
 
     private class UserLoginTask extends AsyncTask<Void, Void, Boolean> {
 
+        private LoginActivity mUiThread;
         private final String mLogin;
         private final String mPassword;
 
-        UserLoginTask(String login, String password) {
+        UserLoginTask(String login, String password, LoginActivity uiThread) {
             mLogin = login;
             mPassword = password;
+            mUiThread = uiThread;
         }
 
         @Override
@@ -174,7 +173,9 @@ public class LoginActivity extends AppCompatActivity {
             showProgress(false);
 
             if (success) {
-                //todo
+                Intent mainActivity = new Intent(mUiThread, MainActivity.class);
+                mainActivity.putExtra("token", token);
+                startActivity(mainActivity);
             } else {
                 mPasswordView.setError(getString(R.string.error_incorrect_password));
                 mPasswordView.requestFocus();

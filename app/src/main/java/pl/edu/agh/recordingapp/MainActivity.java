@@ -40,13 +40,11 @@ public class MainActivity extends AppCompatActivity {
 
     private boolean isRecording = false;
     private long recordingTime = 0;
-    private String token = "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJkandvanRhcyIsImV4cCI6MTU0NzE0MTI1Nn0.1vKoYGzXPnlTWwjptVQAUJ70_Cs4UF3XVsCpE2ZYKqFP0ErBGNofXs4KhtCVmdra42vOI57myP22qNB2sxGDjA";//todo
+    private String token;
     private MediaRecorder myAudioRecorder;
     private String outputFile;
     private RecordingsService recordingsService;
     private List<CreateMarkRequest> createMarkRequests;
-    private Long lastTapTime = 0L;
-    private Long taps = 0L;
     private boolean isDarkMode = false;
 
     private Button mRecordButton;
@@ -72,6 +70,8 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         checkPermissions();
+
+        token = getIntent().getStringExtra("token");
 
         Retrofit retrofit = new Retrofit.Builder()
                 .addConverterFactory(JacksonConverterFactory.create())
