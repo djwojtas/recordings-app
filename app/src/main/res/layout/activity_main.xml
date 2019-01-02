@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity" >
+
+
+    <ImageView
+        android:id="@+id/black_screen"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="gone"
+        app:srcCompat="@android:color/black" />
+
+    <LinearLayout
+        android:id="@+id/form_layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fitsSystemWindows="true"
+        android:orientation="vertical">
+
+        <Button
+            android:id="@+id/start_recording"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/start_recording" />
+
+        <Button
+            android:id="@+id/now_button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="now"
+            android:visibility="gone" />
+
+        <Button
+            android:id="@+id/thirty_seconds_button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="30 seconds"
+            android:visibility="gone" />
+
+        <Button
+            android:id="@+id/two_minutes_button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="two  minutes"
+            android:visibility="gone" />
+
+        <Button
+            android:id="@+id/five_minutes_button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="five minutes"
+            android:visibility="gone" />
+
+        <Button
+            android:id="@+id/dark_mode_button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="enable dark mode"
+            android:visibility="gone" />
+    </LinearLayout>
+</android.support.constraint.ConstraintLayout>
