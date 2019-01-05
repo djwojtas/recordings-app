@@ -19,4 +19,6 @@
     <string name="user_already_exists">Username already exists</string>
     <string name="start_recording">Start Recording</string>
     <string name="stop_recording">Stop Recording</string>
+    <string name="action_set_server_address">Set server address</string>
+    <string name="prompt_server">Set server address</string>
 </resources>

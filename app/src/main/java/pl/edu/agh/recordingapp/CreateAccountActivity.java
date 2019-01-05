@@ -25,8 +25,6 @@ import retrofit2.converter.jackson.JacksonConverterFactory;
 
 public class CreateAccountActivity extends AppCompatActivity {
 
-    private static final int REQUEST_READ_CONTACTS = 0;
-
     private CreateUserTask mAuthTask = null;
 
     private EditText mLoginView;
@@ -43,7 +41,7 @@ public class CreateAccountActivity extends AppCompatActivity {
 
         Retrofit retrofit = new Retrofit.Builder()
                 .addConverterFactory(JacksonConverterFactory.create())
-                .baseUrl("http://192.168.0.27:8080/")
+                .baseUrl(LoginActivity.SERVER_ADDRESS)
                 .build();
 
         userService = retrofit.create(UserService.class);

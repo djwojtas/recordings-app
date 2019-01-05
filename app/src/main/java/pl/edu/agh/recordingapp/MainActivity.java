@@ -75,7 +75,7 @@ public class MainActivity extends AppCompatActivity {
 
         Retrofit retrofit = new Retrofit.Builder()
                 .addConverterFactory(JacksonConverterFactory.create())
-                .baseUrl("http://192.168.0.27:8080/")
+                .baseUrl(LoginActivity.SERVER_ADDRESS)
                 .build();
 
         recordingsService = retrofit.create(RecordingsService.class);
@@ -219,26 +219,18 @@ public class MainActivity extends AppCompatActivity {
 
     private void record(View view) {
         if (isRecording) {
-            MediaPlayer mediaPlayer = new MediaPlayer();
-            try {
-                myAudioRecorder.stop();
-                myAudioRecorder.release();
-                myAudioRecorder = null;
+            myAudioRecorder.stop();
+            myAudioRecorder.release();
+            myAudioRecorder = null;
 
-                mediaPlayer.setDataSource(outputFile);
-                mediaPlayer.prepare();
-                mediaPlayer.start();
-                Toast.makeText(getApplicationContext(), "Uploading file...", Toast.LENGTH_LONG).show();
+            Toast.makeText(getApplicationContext(), "Uploading file...", Toast.LENGTH_LONG).show();
 
-                (new UploadRecordingTask()).execute((Void) null);
+            (new UploadRecordingTask()).execute((Void) null);
 
-                setMarkButtonsVisibility(View.GONE);
-                mRecordButton.setText(getString(R.string.start_recording));
-                getWindow().clearFlags(android.view.WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
-                isRecording = !isRecording;
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+            setMarkButtonsVisibility(View.GONE);
+            mRecordButton.setText(getString(R.string.start_recording));
+            getWindow().clearFlags(android.view.WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
+            isRecording = !isRecording;
         } else {
             try {
                 createMarkRequests = new ArrayList<>();

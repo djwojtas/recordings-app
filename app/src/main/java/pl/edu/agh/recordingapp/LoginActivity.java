@@ -26,12 +26,15 @@ import retrofit2.converter.jackson.JacksonConverterFactory;
 
 public class LoginActivity extends AppCompatActivity {
 
+    public static String SERVER_ADDRESS = "http://localhost:8080/";
+
     private UserLoginTask mAuthTask = null;
 
     private String token;
 
     private EditText mLoginView;
     private EditText mPasswordView;
+    private EditText mServerAddressView;
     private View mProgressView;
     private View mLoginFormView;
 
@@ -43,7 +46,7 @@ public class LoginActivity extends AppCompatActivity {
 
         Retrofit retrofit = new Retrofit.Builder()
                 .addConverterFactory(JacksonConverterFactory.create())
-                .baseUrl("http://192.168.0.27:8080/")
+                .baseUrl(LoginActivity.SERVER_ADDRESS)
                 .build();
 
         userService = retrofit.create(UserService.class);
@@ -57,6 +60,10 @@ public class LoginActivity extends AppCompatActivity {
         });
 
         mLoginView = findViewById(R.id.login);
+
+        mServerAddressView = findViewById(R.id.server_address);
+        Button setServerAddressButton = findViewById(R.id.set_address_button);
+        setServerAddressButton.setOnClickListener(view -> SERVER_ADDRESS = mServerAddressView.getText().toString());
 
         mPasswordView = findViewById(R.id.password);
         mPasswordView.setOnEditorActionListener((textView, id, keyEvent) -> {
@@ -151,6 +158,7 @@ public class LoginActivity extends AppCompatActivity {
             mUiThread = uiThread;
         }
 
+        @SuppressWarnings("ConstantConditions")
         @Override
         protected Boolean doInBackground(Void... params) {
             Call<LoginResponse> login = userService.login(new LoginUserRequest(mLogin, mPassword));
