@@ -26,7 +26,7 @@ import retrofit2.converter.jackson.JacksonConverterFactory;
 
 public class LoginActivity extends AppCompatActivity {
 
-    public static String SERVER_ADDRESS = "http://localhost:8080/";
+    public static String SERVER_ADDRESS;
 
     private UserLoginTask mAuthTask = null;
 
@@ -44,13 +44,6 @@ public class LoginActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        Retrofit retrofit = new Retrofit.Builder()
-                .addConverterFactory(JacksonConverterFactory.create())
-                .baseUrl(LoginActivity.SERVER_ADDRESS)
-                .build();
-
-        userService = retrofit.create(UserService.class);
-
         setContentView(R.layout.activity_login);
 
         Button createAccountButton = findViewById(R.id.create_account_button);
@@ -60,10 +53,6 @@ public class LoginActivity extends AppCompatActivity {
         });
 
         mLoginView = findViewById(R.id.login);
-
-        mServerAddressView = findViewById(R.id.server_address);
-        Button setServerAddressButton = findViewById(R.id.set_address_button);
-        setServerAddressButton.setOnClickListener(view -> SERVER_ADDRESS = mServerAddressView.getText().toString());
 
         mPasswordView = findViewById(R.id.password);
         mPasswordView.setOnEditorActionListener((textView, id, keyEvent) -> {
@@ -79,6 +68,22 @@ public class LoginActivity extends AppCompatActivity {
 
         mLoginFormView = findViewById(R.id.create_account_form);
         mProgressView = findViewById(R.id.create_account_progress);
+
+        createAccountButton.setEnabled(false);
+        signInButton.setEnabled(false);
+        mServerAddressView = findViewById(R.id.server_address);
+        Button setServerAddressButton = findViewById(R.id.set_address_button);
+        setServerAddressButton.setOnClickListener(view -> {
+            SERVER_ADDRESS = mServerAddressView.getText().toString();
+            Retrofit retrofit = new Retrofit.Builder()
+                    .addConverterFactory(JacksonConverterFactory.create())
+                    .baseUrl(LoginActivity.SERVER_ADDRESS)
+                    .build();
+
+            userService = retrofit.create(UserService.class);
+            createAccountButton.setEnabled(true);
+            signInButton.setEnabled(true);
+        });
     }
 
     private void attemptLogin() {
